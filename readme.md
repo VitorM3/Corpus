@@ -8,15 +8,14 @@ Danilo Formanski - Danilean<br>
 Keniel Nunes - KenielDev<br>
 Laura Silveira - Laurassilveirag<br>
 Rafael Castro - RafaelDaSilvaCastro<br>
-Vinicius Albino - Shinguek0
+Vinicius Albino - Shinguek0<br>
 Yuri Lopes - YuriLopesM
 
 
 
 ### Modelo Físico:
-Utilizado https://drawsql.app/teams/vitor-loch/diagrams/corpus<br>
-Arquivo fonte: <code>link pro arquivo</code><br>
-<code>Imagem</code>
+https://drawsql.app/teams/vitor-loch/diagrams/corpus<br>
+![image-diagram](./database/doc/image/diagram.png)
   
 ### Dicionário de Dados:
 <code>Excel ou tabela do Github (markdown)</code>
@@ -33,5 +32,5 @@ Banco de dados utilizado SQL Server versão 2022 - Azure.<br>
 <code>1 arquivo SQL por objeto</code>
   
 ### Código do sistema:
-Linguagem de Programação C# .NET.<br>
+Linguagem de Programação Javascript <br>
 <code>código fonte da aplicação</code>

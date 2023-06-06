@@ -9,7 +9,8 @@ Keniel Nunes - KenielDev<br>
 Laura Silveira - Laurassilveirag<br>
 Rafael Castro - RafaelDaSilvaCastro<br>
 Vinicius Albino - Shinguek0<br>
-Yuri Lopes - YuriLopesM
+Yuri Lopes - YuriLopesM<br>
+Vitor Minatto - Minattoo
 
 
 

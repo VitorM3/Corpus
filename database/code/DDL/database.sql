@@ -88,6 +88,7 @@ id INT IDENTITY(1,1) PRIMARY KEY,
 pacient_id INT NOT NULL,
 doctor_id INT NOT NULL,
 attendant_id INT NOT NULL,
+meetings_number INT NOT NULL DEFAULT 1,
 description VARCHAR(500) NOT NULL,
 created_at DATETIME DEFAULT GETDATE(),
 updated_at DATETIME DEFAULT GETDATE(),
@@ -173,6 +174,7 @@ CREATE TABLE meeting_tool(
     id INT IDENTITY(1,1) PRIMARY KEY,
     meeting_id INT NOT NULL,
     tool_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1
     created_at DATETIME DEFAULT GETDATE(),
     updated_at DATETIME DEFAULT GETDATE(),
     deleted_at DATETIME,
@@ -205,6 +207,7 @@ CREATE TABLE exercise_tool(
     id INT IDENTITY(1,1) PRIMARY KEY,
     exercise_id INT NOT NULL,
     tool_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1
     created_at DATETIME DEFAULT GETDATE(),
     updated_at DATETIME DEFAULT GETDATE(),
     deleted_at DATETIME,
@@ -233,3 +236,20 @@ BEGIN
 	SELECT dbo.update_updated_at('exercise_meeting', u.id) FROM inserted u;
 END;
 /*=========================================================================================*/
+/*Criar tabela de itens de uma sala*/
+CREATE TABLE room_tool (
+ID INT IDENTITY(1,1) PRIMARY KEY,
+tool_id INT NOT NULL,
+room_id INT NOT NULL,
+quantity INT NOT NULL DEFAULT 1
+created_at DATETIME DEFAULT GETDATE(),
+updated_at DATETIME DEFAULT GETDATE(),
+deleted_at DATETIME,
+CONSTRAINT fk_tool_room_permission_sector FOREIGN KEY (tool_id) REFERENCES inventory(id),
+CONSTRAINT fk_room_room_permission_sector FOREIGN KEY (room_id) REFERENCES room(id),
+);
+CREATE TRIGGER tr_update_room_tool_updated_at ON "room_tool" AFTER UPDATE AS 
+BEGIN
+	SELECT dbo.update_updated_at('room_tool', u.id) FROM inserted u;
+END;
+/*========================================================================================*/

@@ -3,6 +3,7 @@ CREATE TABLE exercise_tool(
     id INT IDENTITY(1,1) PRIMARY KEY,
     exercise_id INT NOT NULL,
     tool_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1
     created_at DATETIME DEFAULT GETDATE(),
     updated_at DATETIME DEFAULT GETDATE(),
     deleted_at DATETIME,

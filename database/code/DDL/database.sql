@@ -83,7 +83,7 @@ BEGIN
 END;
 /*============================================================================================*/
 /*Criar tabela de atendimentos*/
-CREATE TABLE attendance(
+CREATE TABLE attendances(
 id INT IDENTITY(1,1) PRIMARY KEY,
 pacient_id INT NOT NULL,
 doctor_id INT NOT NULL,
@@ -217,6 +217,7 @@ BEGIN
 	SELECT dbo.update_updated_at('exercise_tool', u.id) FROM inserted u;
 END;
 /*===========================================================================================*/
+/*Criar tabela de exercícios feitos em cada encontro*/
 CREATE TABLE exercise_meeting(
     id INT IDENTITY(1,1) PRIMARY KEY,
     exercise_id INT NOT NULL,

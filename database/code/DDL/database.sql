@@ -7,11 +7,6 @@ EXEC sp_executesql @COMMAND, @ID
 RETURN 1
 END;
 
-/*Trigger base para esta atualização*/
-CREATE TRIGGER tr_update_default_updated_at ON "default" AFTER UPDATE AS 
-BEGIN
-	SELECT dbo.update_updated_at('default', u.id) FROM inserted u;
-END;
 /*===============================================================================================*/
 
 /*Criar tabela de usuários*/
@@ -107,6 +102,7 @@ END;
 CREATE TABLE room (
 id INT IDENTITY(1,1) PRIMARY KEY,
 name VARCHAR(60) NOT NULL UNIQUE,
+occupied BIT NOT NULL DEFAULT 0,
 created_at DATETIME DEFAULT GETDATE(),
 updated_at DATETIME DEFAULT GETDATE(),
 deleted_at DATETIME,
@@ -174,13 +170,13 @@ CREATE TABLE meeting_tool(
     id INT IDENTITY(1,1) PRIMARY KEY,
     meeting_id INT NOT NULL,
     tool_id INT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1
+    quantity INT NOT NULL DEFAULT 1,
     created_at DATETIME DEFAULT GETDATE(),
     updated_at DATETIME DEFAULT GETDATE(),
     deleted_at DATETIME,
     CONSTRAINT fk_meeting_meeting_tool FOREIGN KEY (meeting_id) REFERENCES meeting(id),
     CONSTRAINT fk_tool_meeting_tool FOREIGN KEY (tool_id) REFERENCES inventory(id)
-)
+);
 
 CREATE TRIGGER tr_update_meeting_tool_updated_at ON "meeting_tool" AFTER UPDATE AS 
 BEGIN
@@ -207,7 +203,7 @@ CREATE TABLE exercise_tool(
     id INT IDENTITY(1,1) PRIMARY KEY,
     exercise_id INT NOT NULL,
     tool_id INT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1
+    quantity INT NOT NULL DEFAULT 1,
     created_at DATETIME DEFAULT GETDATE(),
     updated_at DATETIME DEFAULT GETDATE(),
     deleted_at DATETIME,
@@ -245,8 +241,8 @@ quantity INT NOT NULL DEFAULT 1
 created_at DATETIME DEFAULT GETDATE(),
 updated_at DATETIME DEFAULT GETDATE(),
 deleted_at DATETIME,
-CONSTRAINT fk_tool_room_permission_sector FOREIGN KEY (tool_id) REFERENCES inventory(id),
-CONSTRAINT fk_room_room_permission_sector FOREIGN KEY (room_id) REFERENCES room(id),
+CONSTRAINT fk_tool_room_tool FOREIGN KEY (tool_id) REFERENCES inventory(id),
+CONSTRAINT fk_room_room_tool FOREIGN KEY (room_id) REFERENCES room(id),
 );
 CREATE TRIGGER tr_update_room_tool_updated_at ON "room_tool" AFTER UPDATE AS 
 BEGIN

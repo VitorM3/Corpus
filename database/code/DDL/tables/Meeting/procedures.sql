@@ -45,37 +45,43 @@ BEGIN
             /*Verificar se um destes itens não está disponível para uso*/
             IF (SELECT COUNT(
             		        CASE
-	            		        WHEN ((IFNULL(mt.quantity,0) + i.quantity) - et.quantity) < 0 THEN 1
+	            		        WHEN ((ISNULL(mt.quantity,0) + i.quantity) - et.quantity) < 0 THEN 1
 	        		        END
                             ) FROM inventory i
-                INNER JOIN exercise_tool et ON et.tool_id = i.id
-                INNER JOIN exercise e ON e.id = et.exercise_id
+                INNER JOIN exercise_tool et ON et.tool_id = i.id AND et.deleted_at IS NULL
+                INNER JOIN exercise e ON e.id = et.exercise_id AND e.deleted_at IS NULL
                 INNER JOIN exercise_meeting em ON em.exercise_id = e.id
-                LEFT JOIN meeting_tool mt ON mt.tool_id = e.id AND mt.meeting_id = @ID_MEETING
-                WHERE em.meeting_id = @ID_MEETING 
+                LEFT JOIN meeting_tool mt ON mt.tool_id = i.id AND mt.meeting_id = @ID_MEETING AND mt.deleted_at IS NULL
+                WHERE em.meeting_id = @ID_MEETING
                 ) > 0
             	BEGIN
 	            	RAISERROR('Um dos exercícios possui itens que não possuem disponibilidade no momento',16,1)
 	            END;
             /*=======================================================================================*/
             /*Descontar do estoque os itens utilizados no exercício*/
-            //
-            UPDATE i SET i.quantity = i.quantity - SUM(GREATEST(et.quantity - IFNULL(mt.quantity,0),0)) 
-            FROM inventory i 
-            INNER JOIN exercise_tool et ON et.tool_id = i.id
-            LEFT JOIN meeting_tool mt ON mt.tool_id = e.id AND mt.meeting_id = @ID_MEETING 
+            UPDATE inv SET quantity = (
+                SELECT i.quantity - SUM(IIF((et.quantity - ISNULL(mt.quantity,0) > 0),et.quantity - ISNULL(mt.quantity,0),0))
+                FROM exercise_tool et
+                INNER JOIN inventory i ON i.id = et.tool_id AND i.deleted_at IS NULL AND inv.id = i.id
+                INNER JOIN exercise_meeting em ON em.exercise_id = et.exercise_id AND em.deleted_at IS NULL AND em.meeting_id = @ID_MEETING
+                LEFT JOIN meeting_tool mt ON mt.meeting_id = em.meeting_id AND mt.deleted_at IS NULL
+                GROUP BY i.quantity
+            )
+            FROM inventory inv
+            INNER JOIN exercise_tool ext ON ext.tool_id = inv.id
+            INNER JOIN exercise_meeting exm ON exm.exercise_id = ext.exercise_id AND exm.deleted_at IS NULL AND exm.meeting_id = @ID_MEETING
             /*=======================================================================================*/
              /*Inserir itens que foram utilizados no encontro*/
             INSERT INTO meeting_tool (meeting_id,tool_id,quantity) 
-            (SELECT @ID_MEETING as meeting_id, tool_id, quantity FROM exercise_tool WHERE meeting_id = @ID_MEETING);
+            (SELECT @ID_MEETING, et.tool_id, et.quantity FROM exercise_tool et
+            INNER JOIN exercise_meeting em ON em.exercise_id = et.exercise_id AND em.deleted_at IS NULL
+           	WHERE em.meeting_id = @ID_MEETING AND et.deleted_at IS NULL);
             /*=======================================================================================*/
             COMMIT;
-        END TRY;
+        END TRY
         BEGIN CATCH;
             THROW
             ROLLBACK;
         END CATCH;
 END;
-
-
 

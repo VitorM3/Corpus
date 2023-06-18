@@ -1,4 +1,7 @@
 import './Login.css'
+import PrimaryButton from '../../core/components/PrimaryButton.style.jsx'
+import InputComponent from "../../core/components/Input.style"
+import { Link } from 'react-router-dom'
 
 const Login = () =>{
   return(
@@ -13,7 +16,21 @@ const Login = () =>{
         </div>
         <div className="element">
           <form className="formLogin">
-              <h3 className="baseText">Login</h3>
+              <div className='titleForm'>
+                <h3 id="loginHeading" className="baseText"><strong>Login</strong></h3>
+              </div>
+              <div className='elementsForm'>
+                <InputComponent labelText="Usuário" style={{ marginBottom: '100px' }}/>
+                <InputComponent labelText="Senha" />
+                <Link to="/relatoriodiario">
+                <PrimaryButton 
+                  elementWidth = '25vw'
+                  elementheight = '7vh'
+                  elementMargin = '3vh'>
+                 Entrar
+                </PrimaryButton>
+                </Link>
+              </div>                
           </form>
         </div>
       </div>     

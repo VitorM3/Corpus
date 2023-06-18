@@ -5,7 +5,7 @@ import RelatorioDiario from "../pages/RelatorioDiario/RelatorioDiario";
 const Router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-        <Route path="/login" element={<Login/>} />
+        <Route path="/" element={<Login/>} />
         <Route path="/relatoriodiario" element={<RelatorioDiario/>} />
     </Route>
   )

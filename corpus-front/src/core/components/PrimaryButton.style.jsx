@@ -1,20 +1,20 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const PrimaryButton = styled.button`
-  background: #FE6A0F;
+  background: #fe6a0f;
   border-radius: 8px;
-  width:  ${(prop) => prop.elementWidth};
-  height: ${(prop) => prop.elementheight};
-  margin: ${(prop) => prop.elementMargin};
-  gap: 8px; 
-  padding:14px, 24px, 14px, 24px;
-  color: #EBF5EE;
+  width: ${(prop) => prop.elementWidth ?? "100%"};
+  height: ${(prop) => prop.elementheight ?? ""};
+  margin: ${(prop) => prop.elementMargin ?? ""};
+  gap: 8px;
+  padding: 0px, 16px, 0px, 16px;
+  color: #ebf5ee;
   border: none;
 
-  &:hover{
+  &:hover {
     background: #af4a0a;
     cursor: pointer;
   }
-`
+`;
 
 export default PrimaryButton;

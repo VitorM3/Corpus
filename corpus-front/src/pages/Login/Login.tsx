@@ -1,9 +1,13 @@
-import './Login.css'
-import PrimaryButton from '../../core/components/PrimaryButton.style.jsx'
-import InputComponent from "../../core/components/Input.style"
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
+import PrimaryButton from '../../core/components/PrimaryButton.style.jsx';
+import InputComponent from "../../core/components/Input.style";
+import InputPassorwd from "../../core/components/InputPassword.style"
+import { FaUser, FaEyeSlash } from "react-icons/fa";
+import './Login.css'
 
 const Login = () =>{
+
   return(
     <>
       <div className="screenLogin">
@@ -20,8 +24,9 @@ const Login = () =>{
                 <h3 id="loginHeading" className="baseText"><strong>Login</strong></h3>
               </div>
               <div className='elementsForm'>
-                <InputComponent labelText="Usuário" style={{ marginBottom: '100px' }}/>
-                <InputComponent labelText="Senha" />
+              
+                <InputComponent labelText="Usuário" type="text"  icon={FaUser} style={{ marginBottom: '100px' }}/>
+                <InputPassorwd/>
                 <Link to="/relatoriodiario">
                 <PrimaryButton 
                   elementWidth = '25vw'
@@ -30,6 +35,7 @@ const Login = () =>{
                  Entrar
                 </PrimaryButton>
                 </Link>
+               
               </div>                
           </form>
         </div>

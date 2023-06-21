@@ -6,6 +6,5 @@ CREATE TABLE "user"(
     cpf CHAR(11) NOT NULL UNIQUE,
     password VARCHAR(300),
     created_at DATETIME DEFAULT GETDATE(),
-    updated_at DATETIME DEFAULT GETDATE(),
     deleted_at DATETIME,
 );

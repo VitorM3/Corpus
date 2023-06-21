@@ -1,9 +1,3 @@
-/*Trigger para atualizar a coluna updated_at (Atualizado em) quando um dado é atualizado*/
-CREATE TRIGGER tr_update_meeting_updated_at ON "meeting" AFTER UPDATE AS 
-BEGIN
-	SELECT dbo.update_updated_at('meeting', u.id) FROM inserted u;
-END;
-
 /*Trigger para atualizar uma reunião de um atendimento quando esta inicia*/
 CREATE TRIGGER tr_start_meeting ON "meeting" AFTER UPDATE AS
 BEGIN
@@ -26,5 +20,29 @@ BEGIN
 				END;
 			CLOSE start_meeting_cursor;
 			DEALLOCATE start_meeting_cursor;	
+		END;
+END;
+
+/*Trigger para atualizar uma reunião de um atendimento quando ele finaliza*/
+CREATE TRIGGER tr_end_meeting ON "meeting" AFTER UPDATE AS 
+BEGIN
+	IF UPDATE (ended_at)
+		BEGIN
+			DECLARE @ID_MEETING INT;
+			DECLARE @ID_ROOM INT;
+			
+			DECLARE end_meeting_cursor CURSOR FOR
+			SELECT id as ID_MEETiNG, room_id AS ID_ROOM FROM inserted;
+			
+			OPEN end_meeting_cursor;
+		
+			FETCH NEXT FROM end_meeting_cursor INTO @ID_MEETING, @ID_ROOM;
+			WHILE @@FETCH_STATUS = 0
+				BEGIN
+					EXEC proc_end_meeting_in_room @ID_MEETING, @ID_ROOM;
+					FETCH NEXT FROM end_meeting_cursor INTO @ID_MEETING, @ID_ROOM;
+				END;
+			CLOSE end_meeting_cursor;
+			DEALLOCATE end_meeting_cursor;	
 		END;
 END;

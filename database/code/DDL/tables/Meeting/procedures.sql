@@ -85,3 +85,18 @@ BEGIN
         END CATCH;
 END;
 
+/*Procedure para atualizar os dados de uma sala quando um encontro acaba*/
+CREATE PROCEDURE proc_end_meeting_in_room @ID_MEETING INT, @ID_ROOM INT AS
+BEGIN
+    BEGIN TRAN
+        BEGIN TRY
+            /*Define que a sala não está mais ocupada*/
+            UPDATE room SET occupied = 0 WHERE id = @ID_ROOM
+    COMMIT;
+        END TRY
+        BEGIN CATCH
+    ROLLBACK;
+            THROW;
+        END CATCH;
+END;
+

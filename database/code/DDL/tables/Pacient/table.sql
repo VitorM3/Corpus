@@ -7,7 +7,6 @@ phone_alternative VARCHAR(15) NOT NULL,
 sus_code CHAR(15) NOT NULL UNIQUE,
 unimed_code CHAR(15) UNIQUE,
 created_at DATETIME DEFAULT GETDATE(),
-updated_at DATETIME DEFAULT GETDATE(),
 deleted_at DATETIME,
 CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "user"(id)
 );

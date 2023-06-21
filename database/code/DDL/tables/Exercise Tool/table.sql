@@ -5,7 +5,6 @@ CREATE TABLE exercise_tool(
     tool_id INT NOT NULL,
     quantity INT NOT NULL DEFAULT 1
     created_at DATETIME DEFAULT GETDATE(),
-    updated_at DATETIME DEFAULT GETDATE(),
     deleted_at DATETIME,
     CONSTRAINT fk_exercise_exercise_tool FOREIGN KEY (exercise_id) REFERENCES exercise(id),
     CONSTRAINT fk_tool_exercise_tool FOREIGN KEY (tool_id) REFERENCES inventory(id)

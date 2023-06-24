@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -8,18 +9,18 @@ datasource db {
 }
 
 model attendances {
-  id                                          Int       @id(map: "PK__attendan__3213E83F32A47011") @default(autoincrement())
-  pacient_id                                  Int
-  doctor_id                                   Int
-  attendant_id                                Int
-  meetings_number                             Int       @default(1, map: "DF__attendanc__meeti__38996AB5")
-  description                                 String    @db.VarChar(500)
-  created_at                                  DateTime? @default(now(), map: "DF__attendanc__creat__398D8EEE") @db.DateTime
-  deleted_at                                  DateTime? @db.DateTime
-  employee_attendances_attendant_idToemployee employee  @relation("attendances_attendant_idToemployee", fields: [attendant_id], references: [id], onUpdate: NoAction, map: "fk_attendant_attendances")
-  employee_attendances_doctor_idToemployee    employee  @relation("attendances_doctor_idToemployee", fields: [doctor_id], references: [id], onUpdate: NoAction, map: "fk_doctor_attendances")
-  pacient                                     pacient   @relation(fields: [pacient_id], references: [id], onUpdate: NoAction, map: "fk_pacient_attendances")
-  meeting                                     meeting[]
+  id              Int       @id(map: "PK__attendan__3213E83F32A47011") @default(autoincrement())
+  pacient_id      Int
+  doctor_id       Int
+  attendant_id    Int
+  meetings_number Int       @default(1, map: "DF__attendanc__meeti__38996AB5")
+  description     String    @db.VarChar(500)
+  created_at      DateTime? @default(now(), map: "DF__attendanc__creat__398D8EEE") @db.DateTime
+  deleted_at      DateTime? @db.DateTime
+  attendant       employee  @relation("attendances_attendant_idToemployee", fields: [attendant_id], references: [id], onUpdate: NoAction, map: "fk_attendant_attendances")
+  doctor          employee  @relation("attendances_doctor_idToemployee", fields: [doctor_id], references: [id], onUpdate: NoAction, map: "fk_doctor_attendances")
+  pacient         pacient   @relation(fields: [pacient_id], references: [id], onUpdate: NoAction, map: "fk_pacient_attendances")
+  meeting         meeting[]
 }
 
 model employee {
@@ -168,4 +169,15 @@ model user {
   deleted_at DateTime?  @db.DateTime
   employee   employee[]
   pacient    pacient[]
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view vw_attendance_find_all {
+  id                            Int @unique
+  pacient_name                  String @db.VarChar(50)
+  doctor_name                   String @db.VarChar(50)
+  description                   String @db.VarChar(500)
+  qtd_meetings                  Int?
+  qtd_meetings_without_presence Int?
+  qtd_meetings_presence         Int?
 }

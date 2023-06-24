@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model attendances {
+  id                                          Int       @id(map: "PK__attendan__3213E83F32A47011") @default(autoincrement())
+  pacient_id                                  Int
+  doctor_id                                   Int
+  attendant_id                                Int
+  meetings_number                             Int       @default(1, map: "DF__attendanc__meeti__38996AB5")
+  description                                 String    @db.VarChar(500)
+  created_at                                  DateTime? @default(now(), map: "DF__attendanc__creat__398D8EEE") @db.DateTime
+  deleted_at                                  DateTime? @db.DateTime
+  employee_attendances_attendant_idToemployee employee  @relation("attendances_attendant_idToemployee", fields: [attendant_id], references: [id], onUpdate: NoAction, map: "fk_attendant_attendances")
+  employee_attendances_doctor_idToemployee    employee  @relation("attendances_doctor_idToemployee", fields: [doctor_id], references: [id], onUpdate: NoAction, map: "fk_doctor_attendances")
+  pacient                                     pacient   @relation(fields: [pacient_id], references: [id], onUpdate: NoAction, map: "fk_pacient_attendances")
+  meeting                                     meeting[]
+}
+
+model employee {
+  id                                             Int           @id(map: "PK__employee__3213E83F6B9B198D") @default(autoincrement())
+  user_id                                        Int
+  sector_id                                      Int
+  access_code                                    String        @db.Char(12)
+  created_at                                     DateTime?     @default(now(), map: "DF__employee__create__33D4B598") @db.DateTime
+  deleted_at                                     DateTime?     @db.DateTime
+  attendances_attendances_attendant_idToemployee attendances[] @relation("attendances_attendant_idToemployee")
+  attendances_attendances_doctor_idToemployee    attendances[] @relation("attendances_doctor_idToemployee")
+  sector                                         sector        @relation(fields: [sector_id], references: [id], onUpdate: NoAction, map: "fk_sector_employee")
+  user                                           user          @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "fk_user_employee")
+}
+
+model exercise {
+  id               Int                @id(map: "PK__exercise__3213E83FE9797836") @default(autoincrement())
+  name             String             @unique(map: "UQ__exercise__72E12F1B4E59554A") @db.VarChar(50)
+  description      String             @db.VarChar(500)
+  knowledge_font   String             @db.VarChar(150)
+  created_at       DateTime?          @default(now(), map: "DF__exercise__create__5812160E") @db.DateTime
+  deleted_at       DateTime?          @db.DateTime
+  exercise_meeting exercise_meeting[]
+  exercise_tool    exercise_tool[]
+}
+
+model exercise_meeting {
+  id          Int       @id(map: "PK__exercise__3213E83F1E698EFC") @default(autoincrement())
+  exercise_id Int
+  meeting_id  Int
+  created_at  DateTime? @default(now(), map: "DF__exercise___creat__60A75C0F") @db.DateTime
+  deleted_at  DateTime? @db.DateTime
+  exercise    exercise  @relation(fields: [exercise_id], references: [id], onUpdate: NoAction, map: "fk_exercise_exercise_meeting")
+  meeting     meeting   @relation(fields: [meeting_id], references: [id], onUpdate: NoAction, map: "fk_meeting_exercise_meeting")
+}
+
+model exercise_tool {
+  id          Int       @id(map: "PK__exercise__3213E83F8C1F57EA") @default(autoincrement())
+  exercise_id Int
+  tool_id     Int
+  quantity    Int       @default(1, map: "DF__exercise___quant__5AEE82B9")
+  created_at  DateTime? @default(now(), map: "DF__exercise___creat__5BE2A6F2") @db.DateTime
+  deleted_at  DateTime? @db.DateTime
+  exercise    exercise  @relation(fields: [exercise_id], references: [id], onUpdate: NoAction, map: "fk_exercise_exercise_tool")
+  inventory   inventory @relation(fields: [tool_id], references: [id], onUpdate: NoAction, map: "fk_tool_exercise_tool")
+}
+
+model inventory {
+  id            Int             @id(map: "PK__inventor__3213E83FA8568118") @default(autoincrement())
+  name          String          @unique(map: "UQ__inventor__72E12F1B4C7BB691") @db.VarChar(50)
+  quantity      Int             @db.TinyInt
+  created_at    DateTime?       @default(now(), map: "DF__inventory__creat__49C3F6B7") @db.DateTime
+  deleted_at    DateTime?       @db.DateTime
+  exercise_tool exercise_tool[]
+  meeting_tool  meeting_tool[]
+  room_tool     room_tool[]
+}
+
+model meeting {
+  id               Int                @id(map: "PK__meeting__3213E83FBF19BD2C") @default(autoincrement())
+  room_id          Int
+  attendances_id   Int
+  appointment      DateTime           @db.DateTime
+  started_at       DateTime?          @db.DateTime
+  end_at           DateTime?          @db.DateTime
+  created_at       DateTime?          @default(now(), map: "DF__meeting__created__4CA06362") @db.DateTime
+  deleted_at       DateTime?          @db.DateTime
+  exercise_meeting exercise_meeting[]
+  attendances      attendances        @relation(fields: [attendances_id], references: [id], onUpdate: NoAction, map: "fk_attendances_meeting")
+  room             room               @relation(fields: [room_id], references: [id], onUpdate: NoAction, map: "fk_room_meeting")
+  meeting_tool     meeting_tool[]
+}
+
+model meeting_tool {
+  id         Int       @id(map: "PK__meeting___3213E83F6A76C551") @default(autoincrement())
+  meeting_id Int
+  tool_id    Int
+  quantity   Int       @default(1, map: "DF__meeting_t__quant__5165187F")
+  created_at DateTime? @default(now(), map: "DF__meeting_t__creat__52593CB8") @db.DateTime
+  deleted_at DateTime? @db.DateTime
+  meeting    meeting   @relation(fields: [meeting_id], references: [id], onUpdate: NoAction, map: "fk_meeting_meeting_tool")
+  inventory  inventory @relation(fields: [tool_id], references: [id], onUpdate: NoAction, map: "fk_tool_meeting_tool")
+}
+
+model pacient {
+  id                Int           @id(map: "PK__pacient__3213E83F788536DB") @default(autoincrement())
+  user_id           Int
+  phone             String        @unique(map: "UQ__pacient__B43B145F332D1A9C") @db.VarChar(15)
+  phone_alternative String        @db.VarChar(15)
+  sus_code          String        @unique(map: "UQ__pacient__009342FA78F72E5F") @db.Char(15)
+  unimed_code       String?       @unique(map: "UQ__pacient__7C4720F592B30A34") @db.Char(15)
+  created_at        DateTime?     @default(now(), map: "DF__pacient__created__2C3393D0") @db.DateTime
+  deleted_at        DateTime?     @db.DateTime
+  attendances       attendances[]
+  user              user          @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "fk_user")
+}
+
+model room {
+  id                     Int                      @id(map: "PK__room__3213E83FFB550AB3") @default(autoincrement())
+  name                   String                   @unique(map: "UQ__room__72E12F1B1EC2DF47") @db.VarChar(60)
+  occupied               Boolean                  @default(false, map: "DF__room__occupied__403A8C7D")
+  created_at             DateTime?                @default(now(), map: "DF__room__created_at__412EB0B6") @db.DateTime
+  deleted_at             DateTime?                @db.DateTime
+  meeting                meeting[]
+  room_permission_sector room_permission_sector[]
+  room_tool              room_tool[]
+}
+
+model room_permission_sector {
+  ID         Int       @id(map: "PK__room_per__3214EC27B1669647") @default(autoincrement())
+  sector_id  Int
+  room_id    Int
+  created_at DateTime? @default(now(), map: "DF__room_perm__creat__440B1D61") @db.DateTime
+  deleted_at DateTime? @db.DateTime
+  room       room      @relation(fields: [room_id], references: [id], onUpdate: NoAction, map: "fk_room_room_permission_sector")
+  sector     sector    @relation(fields: [sector_id], references: [id], onUpdate: NoAction, map: "fk_sector_room_permission_sector")
+}
+
+model room_tool {
+  ID         Int       @id(map: "PK__room_too__3214EC271B0F9867") @default(autoincrement())
+  tool_id    Int
+  room_id    Int
+  quantity   Int       @default(1, map: "DF__room_tool__quant__656C112C")
+  created_at DateTime? @default(now(), map: "DF__room_tool__creat__66603565") @db.DateTime
+  deleted_at DateTime? @db.DateTime
+  room       room      @relation(fields: [room_id], references: [id], onUpdate: NoAction, map: "fk_room_room_tool")
+  inventory  inventory @relation(fields: [tool_id], references: [id], onUpdate: NoAction, map: "fk_tool_room_tool")
+}
+
+model sector {
+  id                     Int                      @id(map: "PK__sector__3213E83FD5321A78") @default(autoincrement())
+  name                   String                   @unique(map: "UQ__sector__72E12F1BC8E5DE74") @db.VarChar(50)
+  created_at             DateTime?                @default(now(), map: "DF__sector__created___30F848ED") @db.DateTime
+  deleted_at             DateTime?                @db.DateTime
+  employee               employee[]
+  room_permission_sector room_permission_sector[]
+}
+
+model user {
+  id         Int        @id(map: "PK__user__3213E83F1D7AA58F") @default(autoincrement())
+  name       String     @db.VarChar(50)
+  email      String     @unique(map: "UQ__user__AB6E616485CEA90D") @db.VarChar(80)
+  cpf        String     @unique(map: "UQ__user__D836E71F44BA559D") @db.Char(11)
+  password   String?    @db.VarChar(300)
+  created_at DateTime?  @default(now(), map: "DF__user__created_at__267ABA7A") @db.DateTime
+  deleted_at DateTime?  @db.DateTime
+  employee   employee[]
+  pacient    pacient[]
+}

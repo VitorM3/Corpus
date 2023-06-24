@@ -150,7 +150,7 @@ CREATE TABLE room_tool (
 ID INT IDENTITY(1,1) PRIMARY KEY,
 tool_id INT NOT NULL,
 room_id INT NOT NULL,
-quantity INT NOT NULL DEFAULT 1
+quantity INT NOT NULL DEFAULT 1,
 created_at DATETIME DEFAULT GETDATE(),
 deleted_at DATETIME,
 CONSTRAINT fk_tool_room_tool FOREIGN KEY (tool_id) REFERENCES inventory(id),

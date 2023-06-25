@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmpty } from 'class-validator';
 import PaginationDTO from 'src/shared/base/domain/dto/Pagination.dto';
 
-export default class FindManyPacientDTO extends PaginationDTO {
+export default class FindManyDoctorsDTO extends PaginationDTO {
   @ApiPropertyOptional({
     description: 'Nome do usuário para realizar a filtragem',
     example: 'Vitor Loch',

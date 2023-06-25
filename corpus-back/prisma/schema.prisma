@@ -192,3 +192,11 @@ view vw_pacient {
   unimed_code       String?   @db.Char(15)
   created_at        DateTime? @db.DateTime
 }
+
+view vw_doctor {
+  id          Int    @unique
+  name        String @db.VarChar(50)
+  email       String @db.VarChar(80)
+  cpf         String @db.Char(11)
+  access_code String @db.Char(12)
+}

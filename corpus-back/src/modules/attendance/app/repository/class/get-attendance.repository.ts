@@ -35,7 +35,7 @@ export default class GetAttendanceRepository extends BaseRepository {
       }),
       this.attendanceTableConnection.count({ where }),
     ]);
-    const pages = Math.trunc(count / max);
+    const pages = Math.trunc(count / max) <= 0 ? 1 : Math.trunc(count / max);
     return {
       data: data.map((value) => {
         return new AttendancesEntity(value as unknown as AttendancesEntityType);

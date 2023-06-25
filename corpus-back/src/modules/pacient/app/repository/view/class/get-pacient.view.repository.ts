@@ -26,6 +26,7 @@ export default class PacientViewRepository extends BaseRepository {
     Prisma.vw_pacientWhereInput
   >): Promise<GetManyReturn<ViewPacientEntity>> {
     const { take, skip } = this.calcTakeAndSkip(max, page);
+    console.log(skip);
     const [data, count] = await this.prismaService.$transaction([
       this.pacientTableConnection.findMany({
         select,
@@ -35,7 +36,7 @@ export default class PacientViewRepository extends BaseRepository {
       }),
       this.pacientTableConnection.count({ where }),
     ]);
-    const pages = Math.trunc(count / max);
+    const pages = Math.trunc(count / max) <= 0 ? 1 : Math.trunc(count / max);
     return {
       data: data.map((value) => {
         return new ViewPacientEntity(value as unknown as ViewPacientEntityType);

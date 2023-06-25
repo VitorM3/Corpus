@@ -1,18 +1,12 @@
 import { Prisma } from '@prisma/client';
 import PrismaService from 'src/core/database/app/prisma.service';
-import { AttendanceTableType } from 'src/modules/attendance/domain/types/AttendanceTable.type';
 import GetManyReturn from 'src/shared/base/domain/types/GetManyReturn';
 import GetManyTypeParams from 'src/shared/base/domain/types/GetManyType';
+import RoomEntity, { RoomEntityType } from '../entity/room.entity';
 import BaseRepository from 'src/shared/base/repository/base.repository';
-import AttendancesEntity, {
-  AttendancesEntityType,
-} from '../entity/Attendance.entity';
 
-export default class GetAttendanceRepository extends BaseRepository {
-  public constructor(
-    private readonly attendanceTableConnection: AttendanceTableType,
-    private readonly prismaService: PrismaService,
-  ) {
+export default class GetRoomRepository extends BaseRepository {
+  public constructor(private readonly prismaService: PrismaService) {
     super();
   }
 
@@ -21,26 +15,23 @@ export default class GetAttendanceRepository extends BaseRepository {
     page,
     select,
     where,
-  }: GetManyTypeParams<
-    Prisma.attendancesSelect,
-    Prisma.attendancesWhereInput
-  >): Promise<GetManyReturn<AttendancesEntity>> {
+  }: GetManyTypeParams<Prisma.roomSelect, Prisma.roomWhereInput>): Promise<
+    GetManyReturn<RoomEntity>
+  > {
     const { take, skip } = this.calcTakeAndSkip(max, page);
     const [data, count] = await this.prismaService.$transaction([
-      this.attendanceTableConnection.findMany({
+      this.prismaService.room.findMany({
         select,
         where: { ...where, deleted_at: null },
         take,
         skip,
       }),
-      this.attendanceTableConnection.count({
-        where: { ...where, deleted_at: null },
-      }),
+      this.prismaService.room.count(),
     ]);
     const pages = Math.trunc(count / max) <= 0 ? 1 : Math.trunc(count / max);
     return {
       data: data.map((value) => {
-        return new AttendancesEntity(value as unknown as AttendancesEntityType);
+        return new RoomEntity(value as unknown as RoomEntityType);
       }),
       pages,
       perPage: max,

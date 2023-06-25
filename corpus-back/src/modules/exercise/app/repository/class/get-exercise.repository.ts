@@ -27,7 +27,7 @@ export default class GetExerciseRepository extends BaseRepository {
     const [data, count] = await this.prismaService.$transaction([
       this.exerciseTableConnection.findMany({
         select,
-        where,
+        where: { ...where, deleted_at: null },
         take,
         skip,
       }),

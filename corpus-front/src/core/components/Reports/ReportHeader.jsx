@@ -1,14 +1,18 @@
+import React, { useState } from "react";
 import * as S from "./styles";
 import { Link } from "react-router-dom";
-// import ModalContext from "../Modal/ModalSchedule";
-// import { useContext } from "react";
+import { Modal } from "../Modal/ModalSchedule"; // Importe o componente Modal
 
 const ReportHeader = () => {
-  // const { openModal } = useContext(ModalContext);
+  const [showModal, setShowModal] = useState(false);
 
-  // const OpenModalSchedule = () => {
-  //   openModal();
-  // };
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <S.WrapperHeader>
@@ -17,14 +21,15 @@ const ReportHeader = () => {
         <Link>Sobre</Link>
         <Link>Cadastros</Link>
         <S.Button
-          // onClick={OpenModalSchedule}
           elementWidth="100%"
           elementheight="7vh"
           elementMargin="3vh"
+          onClick={openModal} // Adicione o evento onClick para abrir o modal
         >
           Agendar consulta
         </S.Button>
       </S.WrapperHeaderNavigation>
+      {showModal && <Modal closeModal={closeModal} />}
     </S.WrapperHeader>
   );
 };

@@ -1,6 +1,6 @@
 import AttendanceService from 'src/modules/attendance/app/service/attendance.service';
 import AttendanceController from '../../decorator/Attendance.controller.decorator';
-import { Get, Query } from '@nestjs/common';
+import { Get, Param, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import FindManyAttendanceDTO from 'src/modules/attendance/domain/dto/Find-many.dto';
 import GetManyReturn from 'src/shared/base/domain/types/GetManyReturn';
@@ -39,5 +39,14 @@ export default class GetAttendanceController {
   })
   public async findMany(@Query() dto: FindManyAttendanceDTO) {
     return await this.service.findMany.execute(dto);
+  }
+
+  @Get(':id')
+  @ApiOperation({
+    description: 'Buscar apenas um atendimento com base no id',
+    summary: 'Buscar apenas um atendimento com base no id',
+  })
+  public async findOne(@Param('id') id: number) {
+    return await this.service.findOne.execute(id);
   }
 }

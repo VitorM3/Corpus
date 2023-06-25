@@ -1,10 +1,7 @@
 import AttendanceService from 'src/modules/attendance/app/service/attendance.service';
 import AttendanceController from '../../decorator/Attendance.controller.decorator';
-import { Delete, Get, Param, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import FindManyAttendanceDTO from 'src/modules/attendance/domain/dto/Find-many.dto';
-import GetManyReturn from 'src/shared/base/domain/types/GetManyReturn';
-import ViewAttendanceFindAllEntity from 'src/modules/attendance/app/repository/views/entity/ViewAttendanceFindAll.view.entity';
+import { Delete, Param } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 
 @AttendanceController.default()
 export default class DeleteAttendanceController {
@@ -15,7 +12,7 @@ export default class DeleteAttendanceController {
     description: 'Deletar um atendimento com base no id',
     summary: 'Deletar um atendimento com base no id',
   })
-  public async delete(@Param() id:number) {
+  public async delete(@Param('id') id: number) {
     return await this.service.delete.execute(id);
   }
 }

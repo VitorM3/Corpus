@@ -1,6 +1,6 @@
 export default interface GetManyTypeParams<S, W> {
   select?: S;
   where?: W;
-  max: number;
-  page: number;
+  max?: number;
+  page?: number;
 }

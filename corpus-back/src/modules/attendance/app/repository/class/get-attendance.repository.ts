@@ -47,4 +47,17 @@ export default class GetAttendanceRepository extends BaseRepository {
       total: count,
     };
   }
+
+  public async one(
+    id: number,
+    params: GetManyTypeParams<
+      Prisma.attendancesSelect,
+      Prisma.attendancesWhereInput
+    >,
+  ) {
+    return await this.attendanceTableConnection.findFirst({
+      select: params.select,
+      where: { id, ...params.where },
+    });
+  }
 }

@@ -10,8 +10,8 @@ export default class PostAttendanceController {
 
   @Post()
   @ApiOperation({
-    description: 'Buscar todos os atendimentos cadastrados no sistema',
-    summary: 'Buscar todos os atendimentos cadastrados no sistema',
+    description: 'Criar um novo atendimento',
+    summary: 'Criar um novo atendimento',
   })
   public async create(@Body() dto: CreateAttendanceDto) {
     return await this.service.create.execute(dto);

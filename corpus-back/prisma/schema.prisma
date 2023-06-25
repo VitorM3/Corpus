@@ -171,13 +171,24 @@ model user {
   pacient    pacient[]
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 view vw_attendance_find_all {
-  id                            Int @unique
+  id                            Int    @unique
   pacient_name                  String @db.VarChar(50)
   doctor_name                   String @db.VarChar(50)
   description                   String @db.VarChar(500)
   qtd_meetings                  Int?
   qtd_meetings_without_presence Int?
   qtd_meetings_presence         Int?
+}
+
+view vw_pacient {
+  id                Int       @unique
+  name              String    @db.VarChar(50)
+  email             String    @db.VarChar(80)
+  cpf               String    @db.Char(11)
+  phone             String    @db.VarChar(15)
+  phone_alternative String    @db.VarChar(15)
+  sus_code          String    @db.Char(15)
+  unimed_code       String?   @db.Char(15)
+  created_at        DateTime? @db.DateTime
 }

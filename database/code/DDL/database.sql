@@ -184,3 +184,20 @@ INNER JOIN employee d ON d.id = a.doctor_id
 INNER JOIN [user] du ON du.id = d.user_id
 INNER JOIN meeting m ON m.attendances_id = a.id 
 GROUP BY a.id,u.name,du.name,a.description
+/*============================================================================================*/
+/*View para a busca de pacientes*/
+CREATE VIEW vw_pacient AS
+SELECT 
+u.id as id,
+u.name as name,
+u.email as email,
+u.cpf as cpf,
+p.phone as phone,
+p.phone_alternative as phone_alternative,
+p.sus_code as sus_code,
+p.unimed_code as unimed_code,
+p.created_at as created_at
+ FROM pacient p
+INNER JOIN [user] u ON u.id = p.user_id
+WHERE u.deleted_at IS NULL and p.deleted_at IS NULL
+/*==============================================================================================*/

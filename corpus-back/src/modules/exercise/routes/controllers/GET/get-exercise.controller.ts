@@ -4,7 +4,7 @@ import { Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import GetManyReturn from 'src/shared/base/domain/types/GetManyReturn';
 import ExerciseEntity from 'src/modules/exercise/app/repository/entity/exercise.entity';
-import FindManyExerciseDTO from 'src/modules/exercise/domain/dto/find-many.dto';
+import FindManyInventoryDTO from 'src/modules/exercise/domain/dto/find-many.dto';
 
 @ExerciseController.default()
 export default class GetExerciseController {
@@ -34,7 +34,7 @@ export default class GetExerciseController {
     },
     status: 200,
   })
-  public async findMany(@Query() dto: FindManyExerciseDTO) {
+  public async findMany(@Query() dto: FindManyInventoryDTO) {
     return await this.service.findMany.execute(dto);
   }
 }

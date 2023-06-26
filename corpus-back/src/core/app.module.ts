@@ -5,6 +5,7 @@ import PacientModule from 'src/modules/pacient/pacient.module';
 import EmployeeModule from 'src/modules/employee/employee.module';
 import ExerciseModule from 'src/modules/exercise/exercise.module';
 import RoomModule from 'src/modules/room/room.module';
+import InventoryModule from 'src/modules/inventory/inventory.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import RoomModule from 'src/modules/room/room.module';
     EmployeeModule,
     ExerciseModule,
     RoomModule,
+    InventoryModule,
   ],
 })
 export default class AppModule {}

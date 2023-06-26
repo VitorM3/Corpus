@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as S from "./styles";
 import { Link } from "react-router-dom";
-import { Modal } from "../Modal/ModalSchedule"; // Importe o componente Modal
+import { Modal } from "../Modal";
 
 const ReportHeader = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,15 +16,15 @@ const ReportHeader = () => {
 
   return (
     <S.WrapperHeader>
-      <h1>Corpus</h1>
+      <h1 className='logo'>Corpus</h1>
       <S.WrapperHeaderNavigation>
-        <Link>Sobre</Link>
-        <Link>Cadastros</Link>
+        <Link style={{ textDecoration: 'none', color: 'inherit' }}>Sobre</Link>
+        <Link style={{ textDecoration: 'none', color: 'inherit' }}>Cadastros</Link>
         <S.Button
           elementWidth="100%"
           elementheight="7vh"
           elementMargin="3vh"
-          onClick={openModal} // Adicione o evento onClick para abrir o modal
+          onClick={openModal}
         >
           Agendar consulta
         </S.Button>

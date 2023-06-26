@@ -1,43 +1,24 @@
+import { Attendance } from "../../../types";
 import * as S from "./styles";
 
-const ReportTable = () => {
-  const dadosRelatorio = [
+interface ReportTableProps {
+  attendances: Attendance[];
+}
+
+const ReportTable = ({
+  attendances
+}: ReportTableProps) => {
+  const dadosRelatorio: Attendance[] = [
+    ...attendances,
     {
-      id: "1",
-      nomePaciente: "Keniel",
-      nomeDoutor: "Danilean",
-      descricao: "Lesão repentina pelo cutelo do olaf",
-      qtdEncontros: 8,
-      qtdFaltas: 1,
-      qtdPresenca: 7,
-    },
-    {
-      id: "2",
-      nomePaciente: "Keniel",
-      nomeDoutor: "Danilean",
-      descricao: "Lesão repentina pelo cutelo do olaf",
-      qtdEncontros: 8,
-      qtdFaltas: 1,
-      qtdPresenca: 7,
-    },
-    {
-      id: "3",
-      nomePaciente: "Keniel",
-      nomeDoutor: "Danilean",
-      descricao: "Lesão repentina pelo cutelo do olaf",
-      qtdEncontros: 8,
-      qtdFaltas: 1,
-      qtdPresenca: 7,
-    },
-    {
-      id: "4",
-      nomePaciente: "Keniel",
-      nomeDoutor: "Danilean",
-      descricao: "Lesão repentina pelo cutelo do olaf",
-      qtdEncontros: 8,
-      qtdFaltas: 1,
-      qtdPresenca: 7,
-    },
+      id: 1,
+      pacient: "Keniel",
+      doctor: "Danilean",
+      description: "Lesão repentina pelo cutelo do olaf",
+      meetingsQtd: 8,
+      meetingsWithoutPresenceQtd: 1,
+      meetingsWithPresence: 7,
+    }
   ];
   return (
     <>
@@ -67,22 +48,22 @@ const ReportTable = () => {
               {dadosRelatorio.map((paciente) => (
                 <S.TableRow>
                   <S.TableCell data-label="Nome do Paciente">
-                    {paciente.nomePaciente}
+                    {paciente.pacient}
                   </S.TableCell>
                   <S.TableCell data-label="Nome do Doutor">
-                    {paciente.nomeDoutor}
+                    {paciente.doctor}
                   </S.TableCell>
                   <S.TableCell data-label="Descrição">
-                    {paciente.descricao}
+                    {paciente.description}
                   </S.TableCell>
                   <S.TableCell data-label="Qtd. Encontros">
-                    {paciente.qtdEncontros}
+                    {paciente.meetingsQtd}
                   </S.TableCell>
                   <S.TableCell data-label="Qtd. Faltas">
-                    {paciente.qtdFaltas}
+                    {paciente.meetingsWithoutPresenceQtd}
                   </S.TableCell>
                   <S.TableCell data-label="Qtd. Presença">
-                    {paciente.qtdPresenca}
+                    {paciente.meetingsWithPresence}
                   </S.TableCell>
                   <S.TableCell data-label="Ações">icons</S.TableCell>
                 </S.TableRow>

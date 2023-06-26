@@ -15,7 +15,7 @@ export const TableDescriptionRow = styled.div`
   justify-content: space-between;
   margin-bottom: 1rem;
   margin-top: 3rem;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.white};
   flex-direction: row;
 `;
 
@@ -26,7 +26,7 @@ export const Title = styled.h3`
 export const Divider = styled.div`
   width: 100%;
   height: 1px;
-  background-color: #2a2b2a;
+  background-color: ${({ theme }) => theme.colors.gray[80]};
   margin-bottom: 1rem;
 `;
 
@@ -35,14 +35,14 @@ export const Table = styled.table`
   border-collapse: collapse;
   margin-bottom: 1rem;
   border-radius: 4px;
-  color: #d7e0da;
+  color: ${({ theme }) => theme.colors.gray[20]};
 `;
 
 export const TableHeader = styled.th`
   padding: 1rem;
-  background-color: #1e1f1e;
+  background-color: ${({ theme }) => theme.colors.gray[90]};
   text-align: left;
-  color: #5e6661;
+  color: ${({ theme }) => theme.colors.gray[50]};
 `;
 
 export const TableBody = styled.tbody``;
@@ -53,7 +53,7 @@ export const TableRow = styled.tr`
 
 export const TableCell = styled.td`
   padding: 1rem;
-  border-top: 1px solid #2a2b2a;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[80]};
 `;
 
 export const ResponsiveTable = styled.div`
@@ -76,13 +76,14 @@ export const WrapperHeaderNavigation = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
+  color: ${({ theme }) => theme.colors.gray[60]};
 `;
 
 export const Button = styled.div`
-  background: #fe6a0f;
+  background: ${({ theme }) => theme.colors.orange};
   border-radius: 4px;
   padding: 0.6rem 0.8rem 0.6rem 0.8rem;
-  color: #ebf5ee;
+  color: ${({ theme }) => theme.colors.gray[10]};
   border: none;
   transition-duration: 200ms;
   &:hover {
@@ -92,13 +93,13 @@ export const Button = styled.div`
 `;
 
 export const Select = styled.select`
-  background-color: #1e1f1e;
+  background-color: ${({ theme }) => theme.colors.gray[90]};
   border-radius: 4px;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.white};
   padding: 0.6rem 0.8rem 0.6rem 0.8rem;
   border: none;
 `;
 export const Option = styled.option`
-  background-color: #1e1f1e;
-  color: #fff;
+  background-color: ${({ theme }) => theme.colors.gray[90]};
+  color: ${({ theme }) => theme.colors.white};
 `;

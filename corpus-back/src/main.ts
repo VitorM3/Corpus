@@ -6,6 +6,7 @@ import Validator from './core/config/validator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   Database.config(app);
   Swagger.config(app);
   Validator.config(app);

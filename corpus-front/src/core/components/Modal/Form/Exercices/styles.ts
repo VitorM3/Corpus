@@ -6,13 +6,13 @@ export const Container = styled.form`
   gap: 1.5rem;
   height: 100%;
 
-  div {
-    display: flex;
-    row-gap: 0.6rem;
-    column-gap: 1.5rem;
-  }
-
   footer {
     margin-top: auto;
   }
+`;
+
+export const InputRow = styled.div`
+  display: inline-flex;
+  gap: 1.5rem;
+  justify-content: stretch;
 `;

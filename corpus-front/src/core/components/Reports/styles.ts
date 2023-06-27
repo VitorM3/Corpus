@@ -68,7 +68,7 @@ export const TableCell = styled.td`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 export const ResponsiveTable = styled.div`
@@ -139,6 +139,10 @@ export const ButtonEdit = styled.button<{ size?: number }>`
   height: 100%;
   position: relative;
 
+  img {
+    width: 16px;
+  }
+
   &:hover {
     background: ${({ theme }) => theme.colors.gray[70]};
     cursor: pointer;
@@ -167,6 +171,10 @@ export const ButtonDelete = styled.button<{ size?: number }>`
   transition-duration: 200ms;
   height: 100%;
   position: relative;
+
+  img {
+    width: 16px;
+  }
 
   &:hover {
     background: ${({ theme }) => theme.colors.gray[70]};

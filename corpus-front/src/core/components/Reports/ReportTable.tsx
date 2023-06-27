@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
+import { useDebounce } from "../../../hooks/useDebounce";
 import { Attendance } from "../../../types";
 import { Input } from "../Input";
-// import { Select } from "../Select";
-import * as S from "./styles";
-import { useDebounce } from "../../../hooks/useDebounce";
+import { Select } from "../Select";
 import api from "../../../services/api";
+import * as S from "./styles";
 
 const ReportTable = () => {
   const [attendances, setAttendances] = useState<Attendance[]>([]);
 
   const [searchPatient, setSearchPatient] = useState("");
   const [searchDoctor, setSearchDoctor] = useState("");
+  const [status, setStatus] = useState(true);
 
   const debouncedSearchPatient = useDebounce(searchPatient, 500);
   const debouncedSearchDoctor = useDebounce(searchDoctor, 500);
@@ -22,10 +23,11 @@ const ReportTable = () => {
           params: {
             max: 50,
             page: 1,
+            status,
             ...(debouncedSearchPatient && {
-              nmPacient: debouncedSearchPatient,
+              namePacient: debouncedSearchPatient,
             }),
-            ...(debouncedSearchDoctor && { nmDoctor: debouncedSearchDoctor }),
+            ...(debouncedSearchDoctor && { nameDoctor: debouncedSearchDoctor }),
           },
         });
         setAttendances(data.data);
@@ -35,7 +37,7 @@ const ReportTable = () => {
     };
 
     fetchAttendances();
-  }, [debouncedSearchPatient, debouncedSearchDoctor]);
+  }, [debouncedSearchPatient, debouncedSearchDoctor, status]);
 
   const handleSearchPatient = (value: string) => {
     setSearchPatient(value);
@@ -44,6 +46,10 @@ const ReportTable = () => {
   const handleSearchDoctor = (value: string) => {
     setSearchDoctor(value);
   };
+
+  const handleChangeStatus = async (value: boolean) => {
+    setStatus(value)
+  }
 
   const handleDelete = async (id: number) => {
     try {
@@ -79,12 +85,14 @@ const ReportTable = () => {
               value={searchDoctor}
               onChange={(e) => handleSearchDoctor(e.target.value)}
             />
-            {/* <Select 
+            <Select
+              value={String(status)}
+              onChange={(e) => handleChangeStatus(Boolean(e.target.value))}
               options={[
-                { value: 1, label: "Ativo" },
-                { value: 2, label: "Inativo" },
+                { value: "true", label: "Ativo" },
+                { value: "false", label: "Inativo" },
               ]}
-            /> */}
+            />
           </S.FilterBar>
         </S.TableDescriptionRow>
         <S.Divider />
@@ -125,12 +133,12 @@ const ReportTable = () => {
                   <S.TableCell data-label="Ações">
                     <S.ButtonContainer>
                       <S.ButtonEdit onClick={() => handleEdit(attendance.id)}>
-                        <S.ImageEditAttendant />
+                        <img src="/src/assets/edit.svg" alt="" />
                       </S.ButtonEdit>
                       <S.ButtonDelete
                         onClick={() => handleDelete(attendance.id)}
                       >
-                        <S.ImageDeleteAttendant />
+                        <img src="/src/assets/trash.svg" alt=""/>
                       </S.ButtonDelete>
                     </S.ButtonContainer>
                   </S.TableCell>

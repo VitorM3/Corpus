@@ -48,8 +48,8 @@ const ReportTable = () => {
   };
 
   const handleChangeStatus = async (value: boolean) => {
-    setStatus(value)
-  }
+    setStatus(value);
+  };
 
   const handleDelete = async (id: number) => {
     try {
@@ -133,12 +133,15 @@ const ReportTable = () => {
                   <S.TableCell data-label="Ações">
                     <S.ButtonContainer>
                       <S.ButtonEdit onClick={() => handleEdit(attendance.id)}>
-                        <img src="/src/assets/edit.svg" alt="" />
+                        <img src="/src/assets/edit.svg" alt="Botão de editar" />
                       </S.ButtonEdit>
                       <S.ButtonDelete
                         onClick={() => handleDelete(attendance.id)}
                       >
-                        <img src="/src/assets/trash.svg" alt=""/>
+                        <img
+                          src="/src/assets/trash.svg"
+                          alt="Botão de deletar"
+                        />
                       </S.ButtonDelete>
                     </S.ButtonContainer>
                   </S.TableCell>

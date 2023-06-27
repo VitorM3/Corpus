@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import ImageEdit from "../../../assets/edit.svg";
-import ImageDelete from "../../../assets/trash.svg";
 
 export const Container = styled.div`
   max-width: 80%;
@@ -85,29 +83,6 @@ export const WrapperHeader = styled.div`
   @media (max-width: 425px) {
     flex-direction: column;
   }
-`;
-
-export const ImageEditAttendant = styled.div`
-  width: 16px;
-  height: 16px;
-  background-image: url(${ImageEdit});
-  background-size: cover;
-  filter: brightness(0) invert(1);
-`;
-
-export const ImageDeleteAttendant = styled.div`
-  width: 16px;
-  height: 16px;
-  background-image: url(${ImageDelete});
-  background-size: cover;
-  filter: brightness(0) invert(1);
-`;
-
-export const WrapperHeaderNavigation = styled.div`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  color: ${({ theme }) => theme.colors.gray[60]};
 `;
 
 export const Button = styled.button<{ size?: number }>`

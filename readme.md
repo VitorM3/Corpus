@@ -192,7 +192,9 @@ CONSTRAINT fk_room_room_tool FOREIGN KEY (room_id) REFERENCES room(id),
 
 ### Scripts Popula tabelas:
 
-Banco de dados utilizado SQL Server versão 2022 - Azure.`<br>`
+Banco de dados utilizado SQL Server versão 2022 - Azure.
+
+/database/code/DML
 
 ```sql
 

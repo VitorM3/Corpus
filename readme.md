@@ -4,14 +4,14 @@
 
 ### Integrantes:
 
-Vitor Loch - VitorM3  `<br>`
-Danilo Formanski - Danilean `<br>`
-Keniel Nunes - KenielDev `<br>`
-Laura Silveira - Laurassilveirag `<br>`
-Rafael Castro - RafaelDaSilvaCastro `<br>`
-Vinicius Albino - Shinguek0 `<br>`
-Yuri Lopes - YuriLopesM `<br>`
-Vitor Minatto - Minattoo
+- Vitor Loch - VitorM3 
+- Danilo Formanski - Danilean 
+- Keniel Nunes - KenielDev 
+- Laura Silveira - Laurassilveirag
+- Rafael Castro - RafaelDaSilvaCastro
+- Vinicius Albino - Shinguek0
+- Yuri Lopes - YuriLopesM
+- Vitor Minatto - Minattoo
 
 ### Modelo Físico:
 

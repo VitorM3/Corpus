@@ -88,7 +88,7 @@ export const Equipment = ({ prevStep, ...props }: EquipmentProps) => {
     try {
       const response = await api.post(
         "/attendance",
-        JSON.stringify(completlyScheduleForm)
+        completlyScheduleForm
       );
 
       return response.data;

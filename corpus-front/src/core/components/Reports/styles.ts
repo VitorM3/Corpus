@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import ImageEdit from "../../../assets/edit.svg";
+import ImageDelete from "../../../assets/trash.svg";
 
 export const Container = styled.div`
   max-width: 80%;
@@ -29,7 +31,7 @@ export const FilterBar = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-`
+`;
 
 export const Divider = styled.div`
   width: 100%;
@@ -64,6 +66,11 @@ export const TableCell = styled.td`
   border-top: 1px solid ${({ theme }) => theme.colors.gray[80]};
 `;
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
 export const ResponsiveTable = styled.div`
   overflow-x: auto;
   width: 100%;
@@ -78,6 +85,22 @@ export const WrapperHeader = styled.div`
   @media (max-width: 425px) {
     flex-direction: column;
   }
+`;
+
+export const ImageEditAttendant = styled.div`
+  width: 16px;
+  height: 16px;
+  background-image: url(${ImageEdit});
+  background-size: cover;
+  filter: brightness(0) invert(1);
+`;
+
+export const ImageDeleteAttendant = styled.div`
+  width: 16px;
+  height: 16px;
+  background-image: url(${ImageDelete});
+  background-size: cover;
+  filter: brightness(0) invert(1);
 `;
 
 export const WrapperHeaderNavigation = styled.div`
@@ -101,6 +124,65 @@ export const Button = styled.button<{ size?: number }>`
   &:hover {
     background: #af4a0a;
     cursor: pointer;
+  }
+`;
+
+export const ButtonEdit = styled.button<{ size?: number }>`
+  background: ${({ theme }) => theme.colors.gray[90]};
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem 0.6rem 0.8rem;
+  color: ${({ theme }) => theme.colors.gray[10]};
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition-duration: 200ms;
+  height: 100%;
+  position: relative;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.gray[70]};
+    cursor: pointer;
+    &::after {
+      content: "Edit";
+      display: block;
+      position: absolute;
+      font-size: 12px;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.1rem;
+      border-radius: 4px;
+      color: ${({ theme }) => theme.colors.gray[20]};
+    }
+  }
+`;
+export const ButtonDelete = styled.button<{ size?: number }>`
+  background: ${({ theme }) => theme.colors.gray[90]};
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem 0.6rem 0.8rem;
+  color: ${({ theme }) => theme.colors.gray[10]};
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition-duration: 200ms;
+  height: 100%;
+  position: relative;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.gray[70]};
+    cursor: pointer;
+    &::after {
+      content: "Delete";
+      display: block;
+      position: absolute;
+      font-size: 12px;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.1rem;
+      border-radius: 4px;
+      color: ${({ theme }) => theme.colors.gray[20]};
+    }
   }
 `;
 

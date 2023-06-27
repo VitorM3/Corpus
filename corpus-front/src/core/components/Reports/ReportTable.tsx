@@ -7,59 +7,61 @@ import { useDebounce } from "../../../hooks/useDebounce";
 import api from "../../../services/api";
 
 const ReportTable = () => {
-  const [attendances, setAttendances] = useState<Attendance[]>([])
+  const [attendances, setAttendances] = useState<Attendance[]>([]);
 
-  const [searchPatient, setSearchPatient] = useState('')
-  const [searchDoctor, setSearchDoctor] = useState('')
+  const [searchPatient, setSearchPatient] = useState("");
+  const [searchDoctor, setSearchDoctor] = useState("");
 
-  const debouncedSearchPatient = useDebounce(searchPatient, 500)
-  const debouncedSearchDoctor = useDebounce(searchDoctor, 500)
+  const debouncedSearchPatient = useDebounce(searchPatient, 500);
+  const debouncedSearchDoctor = useDebounce(searchDoctor, 500);
 
   useEffect(() => {
     const fetchAttendances = async () => {
       try {
-        const { data } = await api.get('/attendance', {
+        const { data } = await api.get("/attendance", {
           params: {
             max: 50,
             page: 1,
-            ...(debouncedSearchPatient && { nmPacient: debouncedSearchPatient }),
-            ...(debouncedSearchDoctor && { nmDoctor: debouncedSearchDoctor })
-          }
-        })
-        setAttendances(data.data)
+            ...(debouncedSearchPatient && {
+              nmPacient: debouncedSearchPatient,
+            }),
+            ...(debouncedSearchDoctor && { nmDoctor: debouncedSearchDoctor }),
+          },
+        });
+        setAttendances(data.data);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
 
-    fetchAttendances()
-  }, [debouncedSearchPatient, debouncedSearchDoctor])
+    fetchAttendances();
+  }, [debouncedSearchPatient, debouncedSearchDoctor]);
 
   const handleSearchPatient = (value: string) => {
-    setSearchPatient(value)
-  }
+    setSearchPatient(value);
+  };
 
   const handleSearchDoctor = (value: string) => {
-    setSearchDoctor(value)
-  }
+    setSearchDoctor(value);
+  };
 
   const handleDelete = async (id: number) => {
     try {
-      console.log(`deleting ${id}`)
-      // await api.delete(`/attendance/${id}`)
+      await api.delete(`/attendance/${id}`);
+      console.log(`deleting ${id}`);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const handleEdit = async (id: number) => {
     try {
-      console.log(`editing ${id}`)
-      await api.get(`/attendance/${id}`)
+      console.log(`editing ${id}`);
+      // await api.get(`/attendance/${id}`);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   return (
     <>
@@ -68,12 +70,12 @@ const ReportTable = () => {
           <S.Title>Relatório Diário</S.Title>
           <S.FilterBar>
             <Input
-              placeholder='Buscar nome de paciente'
+              placeholder="Buscar nome de paciente"
               value={searchPatient}
               onChange={(e) => handleSearchPatient(e.target.value)}
             />
             <Input
-              placeholder='Buscar nome de doutor'
+              placeholder="Buscar nome de doutor"
               value={searchDoctor}
               onChange={(e) => handleSearchDoctor(e.target.value)}
             />
@@ -100,33 +102,37 @@ const ReportTable = () => {
               </S.TableRow>
             </thead>
             <S.TableBody>
-              {attendances.map((paciente) => (
+              {attendances.map((attendance) => (
                 <S.TableRow>
                   <S.TableCell data-label="Nome do Paciente">
-                    {paciente.pacient}
+                    {attendance.pacient}
                   </S.TableCell>
                   <S.TableCell data-label="Nome do Doutor">
-                    {paciente.doctor}
+                    {attendance.doctor}
                   </S.TableCell>
                   <S.TableCell data-label="Descrição">
-                    {paciente.description}
+                    {attendance.description}
                   </S.TableCell>
                   <S.TableCell data-label="Qtd. Encontros">
-                    {paciente.meetingsQtd}
+                    {attendance.meetingsQtd}
                   </S.TableCell>
                   <S.TableCell data-label="Qtd. Faltas">
-                    {paciente.meetingsWithoutPresenceQtd}
+                    {attendance.meetingsWithoutPresenceQtd}
                   </S.TableCell>
                   <S.TableCell data-label="Qtd. Presença">
-                    {paciente.meetingsWithPresence}
+                    {attendance.meetingsWithPresence}
                   </S.TableCell>
                   <S.TableCell data-label="Ações">
-                    <S.Button onClick={() => handleEdit(paciente.id)}>
-                      Editar
-                    </S.Button>
-                    <S.Button onClick={() => handleDelete(paciente.id)}>
-                      Deletar
-                    </S.Button>
+                    <S.ButtonContainer>
+                      <S.ButtonEdit onClick={() => handleEdit(attendance.id)}>
+                        <S.ImageEditAttendant />
+                      </S.ButtonEdit>
+                      <S.ButtonDelete
+                        onClick={() => handleDelete(attendance.id)}
+                      >
+                        <S.ImageDeleteAttendant />
+                      </S.ButtonDelete>
+                    </S.ButtonContainer>
                   </S.TableCell>
                 </S.TableRow>
               ))}

@@ -4,18 +4,18 @@
 
 ### Integrantes:
 
-Vitor Loch - VitorM3  `<br>`
-Danilo Formanski - Danilean `<br>`
-Keniel Nunes - KenielDev `<br>`
-Laura Silveira - Laurassilveirag `<br>`
-Rafael Castro - RafaelDaSilvaCastro `<br>`
-Vinicius Albino - Shinguek0 `<br>`
-Yuri Lopes - YuriLopesM `<br>`
-Vitor Minatto - Minattoo
+- Vitor Loch - VitorM3 
+- Danilo Formanski - Danilean 
+- Keniel Nunes - KenielDev 
+- Laura Silveira - Laurassilveirag
+- Rafael Castro - RafaelDaSilvaCastro
+- Vinicius Albino - Shinguek0
+- Yuri Lopes - YuriLopesM
+- Vitor Minatto - Minattoo
 
 ### Modelo Físico:
 
-https://drawsql.app/teams/vitor-loch/diagrams/corpus `<br>`
+https://drawsql.app/teams/vitor-loch/diagrams/corpus <br>
 ![image-diagram](./database/doc/image/diagram.png)
 
 ### Dicionário de Dados:
@@ -24,7 +24,7 @@ https://drawsql.app/teams/vitor-loch/diagrams/corpus `<br>`
 
 ### Scripts DDL Criação do Database:
 
-Banco de dados utilizado SQL Server versão 2022 - Azure. `<br>`
+Banco de dados utilizado SQL Server versão 2022 - Azure. <br>
 
 /database/code/DDL/tables
 

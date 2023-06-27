@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
 
-export type AttendanceFindAllViewType = Prisma.vw_attendance_find_allDelegate<
+export type AttendanceFindAllViewType = Prisma.attendance_reportDelegate<
   Prisma.RejectOnNotFound | Prisma.RejectPerOperation
 >;

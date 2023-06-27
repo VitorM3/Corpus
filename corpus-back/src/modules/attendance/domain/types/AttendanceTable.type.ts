@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
 
-export type AttendanceTableType = Prisma.attendance_reportDelegate<
+export type AttendanceTableType = Prisma.attendancesDelegate<
   Prisma.RejectOnNotFound | Prisma.RejectPerOperation
 >;

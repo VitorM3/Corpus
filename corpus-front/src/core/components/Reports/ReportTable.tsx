@@ -6,7 +6,13 @@ import { Select } from "../Select";
 import api from "../../../services/api";
 import * as S from "./styles";
 
-const ReportTable = () => {
+interface TableProps {
+  isModalOpen: boolean;
+}
+
+const ReportTable = ({
+  isModalOpen
+}: TableProps) => {
   const [attendances, setAttendances] = useState<Attendance[]>([]);
 
   const [searchPatient, setSearchPatient] = useState("");
@@ -17,6 +23,8 @@ const ReportTable = () => {
   const debouncedSearchDoctor = useDebounce(searchDoctor, 500);
 
   useEffect(() => {
+    if (isModalOpen) return
+
     const fetchAttendances = async () => {
       try {
         const { data } = await api.get("/attendance", {
@@ -37,7 +45,7 @@ const ReportTable = () => {
     };
 
     fetchAttendances();
-  }, [debouncedSearchPatient, debouncedSearchDoctor, status]);
+  }, [debouncedSearchPatient, debouncedSearchDoctor, status, isModalOpen]);
 
   const handleSearchPatient = (value: string) => {
     setSearchPatient(value);
@@ -54,6 +62,16 @@ const ReportTable = () => {
   const handleDelete = async (id: number) => {
     try {
       await api.delete(`/attendance/${id}`);
+
+      const { data } = await api.get("/attendance", {
+        params: {
+          max: 50,
+          page: 1,
+          status: true
+        },
+      })
+
+      setAttendances(data.data)
       console.log(`deleting ${id}`);
     } catch (error) {
       console.error(error);
@@ -78,16 +96,16 @@ const ReportTable = () => {
             <Input
               placeholder="Buscar nome de paciente"
               value={searchPatient}
-              onChange={(e) => handleSearchPatient(e.target.value)}
+              onChange={(e: any) => handleSearchPatient(e.target.value)}
             />
             <Input
               placeholder="Buscar nome de doutor"
               value={searchDoctor}
-              onChange={(e) => handleSearchDoctor(e.target.value)}
+              onChange={(e: any) => handleSearchDoctor(e.target.value)}
             />
             <Select
               value={String(status)}
-              onChange={(e) => handleChangeStatus(Boolean(e.target.value))}
+              onChange={(e: any) => handleChangeStatus(Boolean(e.target.value))}
               options={[
                 { value: "true", label: "Ativo" },
                 { value: "false", label: "Inativo" },

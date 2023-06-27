@@ -14,11 +14,12 @@ import { Select } from "../../../Select";
 
 interface EquipmentProps extends FormHTMLAttributes<HTMLFormElement> {
   prevStep: () => void;
+  closeModal: () => void;
   patients?: Patient[];
   doctors?: Doctor[];
 }
 
-export const Equipment = ({ prevStep, ...props }: EquipmentProps) => {
+export const Equipment = ({ prevStep, closeModal, ...props }: EquipmentProps) => {
   const { data } = useFormData();
   const [toolId, setToolId] = useState<number>(0);
   const [equipmentCount, setEquipmentCount] = useState(0);
@@ -90,6 +91,8 @@ export const Equipment = ({ prevStep, ...props }: EquipmentProps) => {
         "/attendance",
         completlyScheduleForm
       );
+
+      closeModal()
 
       return response.data;
     } catch (error) {

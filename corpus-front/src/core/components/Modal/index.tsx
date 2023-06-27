@@ -120,7 +120,7 @@ const Modal = ({ closeModal }: ModalProps) => {
           )}
           {step === 3 && (
             <div>
-              <Equipment prevStep={prevStep} />
+              <Equipment closeModal={closeModal} prevStep={prevStep} />
             </div>
           )}
         </S.Content>

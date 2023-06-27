@@ -1,18 +1,19 @@
-import { useState } from "react";
 import * as S from "./styles";
 import { Link } from "react-router-dom";
 import { Modal } from "../Modal";
 
-const ReportHeader = () => {
-  const [showModal, setShowModal] = useState(false);
+interface HeaderProps {
+  showModal: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+}
 
-  const openModal = () => {
-    setShowModal(true);
-  };
+const ReportHeader = ({
+  showModal,
+  openModal,
+  closeModal
+}: HeaderProps) => {
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
 
   return (
     <S.WrapperHeader>

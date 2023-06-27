@@ -1,7 +1,7 @@
 ﻿
 
 SET IDENTITY_INSERT "user" ON
-GO
+
 
 -- Criando os usuarios dos integrantes do grupo
 insert into "user"(id, name, email, cpf, password)
@@ -121,10 +121,10 @@ values
 (109, 'Pamela Chung','Pamela319@yahoo.com','96226616278',dbo.f_encript_password('Pamela123'));
 
 SET IDENTITY_INSERT "user" OFF
-GO
+
 
 SET IDENTITY_INSERT pacient ON
-GO
+
 
 insert into pacient(id, user_id, phone, phone_alternative, sus_code, unimed_code)
 values(1 , 1, '5500000000000', '5500000000000', '0000000000', 'A00B000C');
@@ -200,10 +200,10 @@ values
 (65, 69, '5548735575536', '5548696290595', '6098851833', 'DBXC8BB88O');
 
 SET IDENTITY_INSERT pacient OFF
-GO
+
 
 SET IDENTITY_INSERT sector ON
-GO
+
 
 insert into sector(id, name)
 values(1, 'Teste');
@@ -216,10 +216,10 @@ values
 (5, 'Medico');
 
 SET IDENTITY_INSERT sector OFF
-GO
+
 
 SET IDENTITY_INSERT employee ON
-GO
+
 
 insert into employee(id, user_id, sector_id, access_code)
 values(1, 1, 1, 'HIM73C8JP012')
@@ -275,10 +275,10 @@ values
 (45, 109, 5, '7Z9YGMTYX48A');
 
 SET IDENTITY_INSERT employee OFF
-GO
+
 
 SET IDENTITY_INSERT attendances ON
-GO
+
 
 insert into attendances(id, pacient_id, doctor_id, attendant_id, meetings_number, description)
 values
@@ -292,10 +292,10 @@ values
 (8, 36, 45, 8, 30, 'Paciente com dor no ombro por conta da postura');
 
 SET IDENTITY_INSERT attendances OFF
-GO
+
 
 SET IDENTITY_INSERT room ON
-GO
+
 
 insert into room(id, name)
 values
@@ -310,10 +310,10 @@ values
 (6, 'Sala de tratamento a lase');
 
 SET IDENTITY_INSERT room OFF
-GO
+
 
 SET IDENTITY_INSERT room_permission_sector ON
-GO
+
 
 insert into room_permission_sector(id, sector_id, room_id)
 values
@@ -325,10 +325,10 @@ values
 (6, 5, 6);
 
 SET IDENTITY_INSERT room_permission_sector OFF
-GO
+
 
 SET IDENTITY_INSERT inventory ON
-GO
+
 
 insert into inventory(id, name, quantity)
 values
@@ -357,10 +357,10 @@ values
 (24, 'goniômetros de medição', 5);
 
 SET IDENTITY_INSERT inventory OFF
-GO
+
 
 SET IDENTITY_INSERT meeting ON
-GO
+
 
 insert into meeting(id, room_id, attendances_id, appointment)
 values
@@ -415,10 +415,10 @@ values
 (45, 5, 5, '2023-07-26');
 
 SET IDENTITY_INSERT meeting OFF
-GO
+
 
 SET IDENTITY_INSERT meeting_tool ON
-GO
+
 
 insert into meeting_tool(id, meeting_id,tool_id,quantity)
 values
@@ -443,10 +443,10 @@ values
 (19, 45, 18, 1);
 
 SET IDENTITY_INSERT meeting_tool OFF
-GO
+
 
 SET IDENTITY_INSERT exercise on
-GO
+
 
 insert into exercise(id, name, description, knowledge_font)
 values
@@ -469,20 +469,20 @@ values
 (17,'Eletrotermofototerapia','Aparelhos como ultrassom, TENS ou laser podem ser usados como anti-inflamatórios que ajudam a aliviar os sintomas, ','Hérnia de Disco');
 
 SET IDENTITY_INSERT exercise OFF
-GO
+
 
 SET IDENTITY_INSERT exercise_tool on
-GO
+
 
 insert into exercise_tool(id, exercise_id, tool_id, quantity)
 values
 (1, 7, 20, 1);
 
 SET IDENTITY_INSERT exercise_tool OFF
-GO
+
 
 SET IDENTITY_INSERT exercise_meeting on
-GO
+
 
 insert into exercise_meeting(id, exercise_id, meeting_id)
 values
@@ -507,13 +507,12 @@ values
 (19, 6, 45);
 
 SET IDENTITY_INSERT exercise_meeting OFF
-GO
+
 
 SET IDENTITY_INSERT room_tool on
-GO
+
 
 insert into room_tool(id,room_id,tool_id,quantity)
 values(1, 1, 1, 1)
 
 SET IDENTITY_INSERT room_tool on
-GO

@@ -13,10 +13,19 @@ export default class AttendanceFindAllViewRepository extends BaseRepository {
     super();
   }
 
-  public async many(max: number, page: number) {
+  public async many(
+    max: number,
+    page: number,
+    namePacient: string,
+    nameDoctor: string,
+  ) {
     const { take, skip } = this.calcTakeAndSkip(max, page);
     const [data, count] = await this.prismaService.$transaction([
       this.attendanceViewFindAll.findMany({
+        where: {
+          pacient_name: namePacient,
+          doctor_name: nameDoctor,
+        },
         take,
         skip,
       }),

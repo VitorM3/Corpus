@@ -1,4 +1,3 @@
-import IBaseService from 'src/shared/base/service/Base.service';
 import FindManyAttendanceFunctionality from './functionality';
 import FindManyAttendanceDTO from 'src/modules/attendance/domain/dto/Find-many.dto';
 import AttendanceRepository from '../../../repository/attendance.repository';
@@ -10,6 +9,6 @@ export default class FindManyAttendanceService extends FindManyAttendanceFunctio
     super(attendanceRepository);
   }
   public async execute(dto: FindManyAttendanceDTO) {
-    return await this.findManyInDatabase(dto.max ?? 50, dto.page ?? 1);
+    return await this.findManyInDatabase(dto);
   }
 }

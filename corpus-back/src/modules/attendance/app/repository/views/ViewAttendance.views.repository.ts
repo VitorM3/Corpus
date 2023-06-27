@@ -5,7 +5,7 @@ export default class ViewsAttendanceRepository {
   public findAll: AttendanceFindAllViewRepository;
   public constructor(private readonly PrismaService: PrismaService) {
     this.findAll = new AttendanceFindAllViewRepository(
-      this.PrismaService.attendance_report,
+      this.PrismaService.vw_attendance_find_all,
       this.PrismaService,
     );
   }

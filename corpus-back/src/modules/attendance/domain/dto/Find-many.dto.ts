@@ -1,18 +1,18 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import PaginationDTO from 'src/shared/base/domain/dto/Pagination.dto';
 
 export default class FindManyAttendanceDTO extends PaginationDTO {
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Nome do paciente',
   })
   public namePacient: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Nome do doutor',
   })
   public nameDoctor: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Pesquisar por atendimento ativo ou inativo',
   })
   public status: boolean;

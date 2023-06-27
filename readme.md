@@ -796,7 +796,8 @@ INNER JOIN employee att ON att.id = a.attendant_id
 INNER JOIN [user] attu ON attu.id = att.user_id
 INNER JOIN employee d ON d.id = a.doctor_id
 INNER JOIN [user] du ON du.id = d.user_id
-INNER JOIN meeting m ON m.attendances_id = a.id 
+INNER JOIN meeting m ON m.attendances_id = a.id
+where a.deleted_at IS NULL 
 GROUP BY a.id,u.name,du.name,a.description
 
 /*View para buscar os colaboradores*/
@@ -977,6 +978,30 @@ p.created_at as created_at
 INNER JOIN [user] u ON u.id = p.user_id
 WHERE u.deleted_at IS NULL and p.deleted_at IS NULL
 
+/*=============================================================================================*/
+/*Index em attendence*/
+CREATE NONCLUSTERED INDEX idx_attendance_description
+ON attendance (description);
+
+/*=============================================================================================*/
+/*Index em user*/
+CREATE NONCLUSTERED INDEX idx_user_name
+ON "user" (name);
+
+CREATE NONCLUSTERED INDEX idx_user_name_email_cpf
+ON "user" (name, email, cpf);
+
+/*=============================================================================================*/
+/*Index em employee*/
+
+CREATE NONCLUSTERED INDEX idx_employee_access_code
+ON employee (access_code);
+
+/*=============================================================================================*/
+/*Index em pacient*/
+
+CREATE NONCLUSTERED INDEX idx_pacient_info
+ON pacient (phone, phone_alternative, sus_code, unimed_code, created_at);
 
 ```
 

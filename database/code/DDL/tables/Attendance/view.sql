@@ -23,5 +23,6 @@ INNER JOIN employee att ON att.id = a.attendant_id
 INNER JOIN [user] attu ON attu.id = att.user_id
 INNER JOIN employee d ON d.id = a.doctor_id
 INNER JOIN [user] du ON du.id = d.user_id
-INNER JOIN meeting m ON m.attendances_id = a.id 
+INNER JOIN meeting m ON m.attendances_id = a.id
+where a.deleted_at IS NULL 
 GROUP BY a.id,u.name,du.name,a.description

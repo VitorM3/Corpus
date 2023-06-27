@@ -4,7 +4,7 @@ import { Input } from "../../../Input";
 import { Exercise, Room, Option } from "../../../../../types";
 import { Footer, StepButton } from "../../styles";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFormData } from "../../../../../context/ScheduleFormContext";
 import { Select } from "../../../Select";
@@ -40,11 +40,22 @@ export const Exercises = ({
   // minDate.setDate(minDate.getDate() - 1)
 
   const secondFormSchema = z.object({
-    exercise: z.string().nonempty("Campo obrigatório").transform(value => Number(value)),
-    room: z.string().nonempty("Campo obrigatório").transform(value => Number(value)),
-    date: z.preprocess((arg) => {
-      if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
-    }, z.date().min(new Date(), "Data inválida")),
+    meetings: z.array(
+      z.object({
+        exerciseId: z
+          .string()
+          .nonempty("Campo obrigatório")
+          .transform((value) => Number(value)),
+        roomId: z
+          .string()
+          .nonempty("Campo obrigatório")
+          .transform((value) => Number(value)),
+        date: z.preprocess((arg) => {
+          if (typeof arg == "string" || arg instanceof Date)
+            return new Date(arg);
+        }, z.date().min(new Date(), "Data inválida")),
+      })
+    ),
   });
 
   type SecondFormType = z.infer<typeof secondFormSchema>;
@@ -52,11 +63,18 @@ export const Exercises = ({
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isValid },
   } = useForm<SecondFormType>({
     resolver: zodResolver(secondFormSchema),
     mode: "all",
   });
+
+  const { append, fields, remove } = useFieldArray({
+    name: "meetings",
+    control,
+  });
+  console.log("🚀 ~ file: index.tsx:74 ~ fields:", fields);
 
   const onSubmit = (values: SecondFormType) => {
     setFormValues(values);
@@ -95,59 +113,70 @@ export const Exercises = ({
 
     fetchExercises();
     fetchRooms();
+    remove();
+    if (data?.qtdMeetings) {
+      const exercises = Array.from({ length: data.qtdMeetings }, () => ({
+        exerciseId: undefined || 0,
+        roomId: undefined || 0,
+        date: new Date(),
+      }));
+
+      append(exercises);
+    }
   }, []);
 
   return (
     <S.Container onSubmit={handleSubmit(onSubmit)} {...props}>
-      <S.InputRow>
-        <Select
-          {...register("exercise", { required: true })}
-          defaultValue={data?.exercise || "default"}
-          errorMessage={errors.exercise?.message}
-          id="exercicio"
-          options={[
-            {
-              value: "default",
-              label: "Selecione um exercício",
-              isPlaceholder: true,
-            },
-            ...(formattedExercises as Option[]),
-          ]}
-          style={{
-            width: "212px"
-          }}
-        />
-        <Select
-          {...register("room", { required: true })}
-          defaultValue={data?.room || "default"}
-          errorMessage={errors.room?.message}
-          id="sala"
-          options={[
-            {
-              value: "default",
-              label: "Selecione uma sala",
-              isPlaceholder: true,
-            },
-            ...(formattedRooms as Option[]),
-          ]}
-          style={{
-            width: "212px"
-          }}
-        />
+      {fields.slice(0, data?.qtdMeetings).map((field, index) => (
+        <S.InputRow key={field.id}>
+          <Select
+            {...register(`meetings.${index}.exerciseId`)}
+            defaultValue={data?.meetings?.[index].exercise || "default"}
+            errorMessage={errors?.meetings?.[index]?.exerciseId?.message}
+            id="exercicio"
+            options={[
+              {
+                value: "default",
+                label: "Selecione um exercício",
+                isPlaceholder: true,
+              },
+              ...(formattedExercises as Option[]),
+            ]}
+            style={{
+              width: "212px",
+            }}
+          />
+          <Select
+            {...register(`meetings.${index}.roomId`)}
+            defaultValue={data?.meetings?.[index].room || "default"}
+            errorMessage={errors?.meetings?.[index]?.exerciseId?.message}
+            id="sala"
+            options={[
+              {
+                value: "default",
+                label: "Selecione uma sala",
+                isPlaceholder: true,
+              },
+              ...(formattedRooms as Option[]),
+            ]}
+            style={{
+              width: "212px",
+            }}
+          />
 
-        <Input
-          {...register("date")}
-          defaultValue={String(data?.date)}
-          errorMessage={errors.date?.message}
-          id="data-agendamento"
-          type="datetime-local"
-          placeholder="Data"
-
-          style={{
-            width: "250px"
-          }}
-        />
-      </S.InputRow>
+          <Input
+            {...register(`meetings.${index}.date`)}
+            defaultValue={String(data?.meetings?.[index].date)}
+            errorMessage={errors?.meetings?.[index]?.date?.message}
+            id="data-agendamento"
+            type="datetime-local"
+            placeholder="Data"
+            style={{
+              width: "250px",
+            }}
+          />
+        </S.InputRow>
+      ))}
 
       <Footer>
         <StepButton buttonType="back" onClick={prevStep}>

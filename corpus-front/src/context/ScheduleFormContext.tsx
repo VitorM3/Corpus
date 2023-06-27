@@ -1,4 +1,10 @@
-import { useState, createContext, useContext, ReactNode, useEffect } from "react";
+import {
+  useState,
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 import { ScheduleFormBody } from "../types";
 
 interface FormContextData {
@@ -15,7 +21,9 @@ interface FormProviderProps {
 export function FormProvider({ children }: FormProviderProps) {
   const [data, setData] = useState<ScheduleFormBody | undefined>();
 
-  useEffect(() => { console.log(data)}, [data])
+  useEffect(() => {
+    console.log("data context =>", data);
+  }, [data]);
 
   const setFormValues = (values: ScheduleFormBody) => {
     setData((prevValues) => ({

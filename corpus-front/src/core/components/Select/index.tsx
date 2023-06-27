@@ -7,6 +7,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     value: string | number;
     label: string;
     isPlaceholder?: boolean;
+    id?: string | undefined;
   }[];
   errorMessage?: string;
 }
@@ -16,8 +17,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <S.Container>
         <S.SelectWrapper {...props} defaultValue="default" ref={ref}>
-          {options.map(({ isPlaceholder, value, label }) => (
+          {options.map(({ id, isPlaceholder, value, label }) => (
             <option
+              id={id}
               disabled={isPlaceholder}
               hidden={isPlaceholder}
               value={value}

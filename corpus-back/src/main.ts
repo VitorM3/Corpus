@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import AppModule from './core/app.module';
-import Swagger from './core/config/swagger';
 import Database from './core/config/database';
+import Swagger from './core/config/swagger';
 import Validator from './core/config/validator';
 
 async function bootstrap() {

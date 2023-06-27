@@ -57,6 +57,8 @@ export const EquipmentsList = styled.div`
   border: 1px;
   border-color: ${({ theme }) => theme.colors.gray[50]};
   width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
 `;
 
 export const EquipmentName = styled.p`

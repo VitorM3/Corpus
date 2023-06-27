@@ -52,7 +52,15 @@ export interface ScheduleFormBody {
   doctorId?: number;
   description?: string;
   qtdMeetings?: number;
-  exercise?: number;
-  room?: number;
-  date?: Date;
+  meetings?: {
+    exercise?: number;
+    room?: number;
+    date?: Date;
+  }[];
+}
+
+export interface Tool {
+  id: number;
+  name: string;
+  quantity: number;
 }

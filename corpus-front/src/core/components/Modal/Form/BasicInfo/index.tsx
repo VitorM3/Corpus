@@ -17,9 +17,10 @@ interface BasicInfoProps extends FormHTMLAttributes<HTMLFormElement> {
   nextFormStep: () => void;
   patients?: Patient[];
   doctors?: Doctor[];
+  step: number;
 }
 
-export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
+export const BasicInfo = ({ nextFormStep, step, ...props }: BasicInfoProps) => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const { data, setFormValues } = useFormData();
@@ -34,15 +35,15 @@ export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
   }));
 
   const firstFormSchema = z.object({
-    patientId: z
+    pacientId: z
       .string()
       .nonempty("Campo obrigatório")
-      .refine((value) => value !== "default", "Campo obrigatório"	)
+      .refine((value) => value !== "default", "Campo obrigatório")
       .transform((value) => Number(value)),
     doctorId: z
       .string()
       .nonempty("Campo obrigatório")
-      .refine((value) => value !== "default", "Campo obrigatório"	)
+      .refine((value) => value !== "default", "Campo obrigatório")
       .transform((value) => Number(value)),
     description: z.string().nonempty("Campo obrigatório"),
     qtdMeetings: z
@@ -66,6 +67,17 @@ export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
     setFormValues(values);
     nextFormStep();
   };
+  // const [selectedPatient, setSelectedPatient] = useState<Patient>();
+
+  // useEffect(() => {
+  //   if (data?.patientId) {
+  //     console.log(
+  //       "🚀 ~ file: index.tsx:75 ~ useEffect ~ data?.patientId:",
+  //       data?.patientId
+  //     );
+  //     setValue("patientId", data.patientId);
+  //   }
+  // }, [data, setValue, step]);
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -76,6 +88,7 @@ export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
             page: 1,
           },
         });
+
         setPatients(data.data);
       } catch (error) {
         console.error(error);
@@ -104,10 +117,10 @@ export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
     <S.Container onSubmit={handleSubmit(onSubmit)} {...props}>
       <div>
         <Select
-          defaultValue={data?.patientId || "default"}
-          errorMessage={errors.patientId?.message}
+          defaultValue={data?.patientId ?? "default"}
+          errorMessage={errors.pacientId?.message}
           id="paciente"
-          {...register("patientId", { required: true })}
+          {...register("pacientId")}
           options={[
             {
               value: "default",
@@ -130,7 +143,8 @@ export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
               value: "default",
               label: "Selecione um doutor",
               isPlaceholder: true,
-            }, {
+            },
+            {
               value: 1,
               label: "Nenhum",
             },

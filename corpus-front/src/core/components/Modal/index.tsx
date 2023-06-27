@@ -19,7 +19,7 @@ export interface Attendance extends FirstStepAttendance {
 }
 
 export interface FirstStepAttendance {
-  patientId: number;
+  pacientId: number;
   doctorId: number;
   description: string;
   qtdMeetings: number;
@@ -114,7 +114,7 @@ const Modal = ({ closeModal }: ModalProps) => {
           <Steps current={step} items={steps} />
         </S.Header>
         <S.Content>
-          {step === 1 && <BasicInfo nextFormStep={nextStep} />}
+          {step === 1 && <BasicInfo step={step} nextFormStep={nextStep} />}
           {step === 2 && (
             <Exercises nextFormStep={nextStep} prevStep={prevStep} />
           )}

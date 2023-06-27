@@ -171,16 +171,6 @@ model user {
   pacient    pacient[]
 }
 
-model attendance_report {
-  id                            Int     @id(map: "PK__attendan__3213E83F5B370836") @default(autoincrement())
-  pacient_name                  String? @db.VarChar(50)
-  doctor_name                   String? @db.VarChar(50)
-  description                   String? @db.VarChar(500)
-  qtd_meetings                  Int?
-  qtd_meetings_without_presence Int?
-  qtd_meetings_presence         Int?
-}
-
 view vw_attendance_find_all {
   id                            Int    @unique
   pacient_name                  String @db.VarChar(50)
@@ -189,8 +179,6 @@ view vw_attendance_find_all {
   qtd_meetings                  Int?
   qtd_meetings_without_presence Int?
   qtd_meetings_presence         Int?
-
-  @@ignore
 }
 
 view vw_pacient {

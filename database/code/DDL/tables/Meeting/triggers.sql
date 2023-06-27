@@ -26,7 +26,7 @@ END;
 /*Trigger para atualizar uma reunião de um atendimento quando ele finaliza*/
 CREATE TRIGGER tr_end_meeting ON "meeting" AFTER UPDATE AS 
 BEGIN
-	IF UPDATE (ended_at)
+	IF UPDATE (end_at)
 		BEGIN
 			DECLARE @ID_MEETING INT;
 			DECLARE @ID_ROOM INT;

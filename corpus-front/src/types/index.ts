@@ -17,6 +17,19 @@ export interface Doctor {
   accessCode: string;
 }
 
+export interface Exercise {
+  id: number;
+  name: string;
+  description: string;
+  knowledge: string;
+}
+
+export interface Room {
+  id: number;
+  name: string;
+  occupied: boolean;
+}
+
 export interface Attendance {
   id: number;
   pacient: string;
@@ -39,8 +52,7 @@ export interface ScheduleFormBody {
   doctorId?: number;
   description?: string;
   qtdMeetings?: number;
-  exercice?: string;
-  room?: string;
-  date?: string;
-  hour?: string;
+  exercise?: number;
+  room?: number;
+  date?: Date;
 }

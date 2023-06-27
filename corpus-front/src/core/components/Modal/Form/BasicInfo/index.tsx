@@ -37,10 +37,12 @@ export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
     patientId: z
       .string()
       .nonempty("Campo obrigatório")
+      .refine((value) => value !== "default", "Campo obrigatório"	)
       .transform((value) => Number(value)),
     doctorId: z
       .string()
       .nonempty("Campo obrigatório")
+      .refine((value) => value !== "default", "Campo obrigatório"	)
       .transform((value) => Number(value)),
     description: z.string().nonempty("Campo obrigatório"),
     qtdMeetings: z
@@ -102,19 +104,15 @@ export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
     <S.Container onSubmit={handleSubmit(onSubmit)} {...props}>
       <div>
         <Select
-          defaultValue={data?.patientId}
+          defaultValue={data?.patientId || "default"}
           errorMessage={errors.patientId?.message}
           id="paciente"
           {...register("patientId", { required: true })}
           options={[
             {
-              value: "",
+              value: "default",
               label: "Selecione um paciente",
               isPlaceholder: true,
-            },
-            {
-              value: "Paciente",
-              label: "Paciente",
             },
             ...(formattedPatients as Option[]),
           ]}
@@ -123,19 +121,18 @@ export const BasicInfo = ({ nextFormStep, ...props }: BasicInfoProps) => {
           }}
         />
         <Select
-          defaultValue={data?.doctorId}
+          defaultValue={data?.doctorId || "default"}
           errorMessage={errors.doctorId?.message}
-          id="Doutor"
+          id="doutor"
           {...register("doctorId")}
           options={[
             {
-              value: "",
+              value: "default",
               label: "Selecione um doutor",
               isPlaceholder: true,
-            },
-            {
-              value: "Doutor",
-              label: "Paciente",
+            }, {
+              value: 1,
+              label: "Nenhum",
             },
             ...(formattedDoctors as Option[]),
           ]}

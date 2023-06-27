@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as S from "./styles";
 import { Link } from "react-router-dom";
 import { Modal } from "../Modal";
@@ -18,12 +18,9 @@ const ReportHeader = () => {
     <S.WrapperHeader>
       <h1 className='logo'>Corpus</h1>
       <S.WrapperHeaderNavigation>
-        <Link style={{ textDecoration: 'none', color: 'inherit' }}>Sobre</Link>
-        <Link style={{ textDecoration: 'none', color: 'inherit' }}>Cadastros</Link>
+        <Link style={{ textDecoration: 'none', color: 'inherit' }} to={""}>Sobre</Link>
+        <Link style={{ textDecoration: 'none', color: 'inherit' }} to={""}>Cadastros</Link>
         <S.Button
-          elementWidth="100%"
-          elementheight="7vh"
-          elementMargin="3vh"
           onClick={openModal}
         >
           Agendar consulta

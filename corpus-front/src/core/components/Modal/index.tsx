@@ -4,7 +4,7 @@ import * as S from "./styles";
 
 import { Steps } from "../Steps";
 import { BasicInfo } from "./Form/BasicInfo";
-import { Exercices } from "./Form/Exercices";
+import { Exercises } from "./Form/Exercises";
 import { FormProvider } from "../../../context/ScheduleFormContext";
 import { Equipment } from "./Form/Equipment";
 
@@ -116,7 +116,7 @@ const Modal = ({ closeModal }: ModalProps) => {
         <S.Content>
           {step === 1 && <BasicInfo nextFormStep={nextStep} />}
           {step === 2 && (
-            <Exercices nextFormStep={nextStep} prevStep={prevStep} />
+            <Exercises nextFormStep={nextStep} prevStep={prevStep} />
           )}
           {step === 3 && (
             <div>

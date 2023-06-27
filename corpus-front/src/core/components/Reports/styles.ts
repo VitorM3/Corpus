@@ -20,8 +20,16 @@ export const TableDescriptionRow = styled.div`
 `;
 
 export const Title = styled.h3`
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 600;
 `;
+
+export const FilterBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+`
 
 export const Divider = styled.div`
   width: 100%;
@@ -79,26 +87,23 @@ export const WrapperHeaderNavigation = styled.div`
   color: ${({ theme }) => theme.colors.gray[60]};
 `;
 
-export const Button = styled.div`
+export const Button = styled.button<{ size?: number }>`
   background: ${({ theme }) => theme.colors.orange};
   border-radius: 4px;
   padding: 0.6rem 0.8rem 0.6rem 0.8rem;
   color: ${({ theme }) => theme.colors.gray[10]};
   border: none;
+  font-size: 1rem;
+  font-weight: 600;
   transition-duration: 200ms;
+  height: 100%;
+
   &:hover {
     background: #af4a0a;
     cursor: pointer;
   }
 `;
 
-export const Select = styled.select`
-  background-color: ${({ theme }) => theme.colors.gray[90]};
-  border-radius: 4px;
-  color: ${({ theme }) => theme.colors.white};
-  padding: 0.6rem 0.8rem 0.6rem 0.8rem;
-  border: none;
-`;
 export const Option = styled.option`
   background-color: ${({ theme }) => theme.colors.gray[90]};
   color: ${({ theme }) => theme.colors.white};

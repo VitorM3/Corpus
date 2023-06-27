@@ -8,7 +8,7 @@ values(1, 'Teste');
 
 insert into sector(id, name)
 values
-(2, 'Atendimento'),
-(3, 'Manutenção'),
-(4, 'Limpesa'),
-(5, 'Medico');
+(2, 'ATTENDANCE'),
+(3, 'MAINTENANCE'),
+(4, 'CLEANING'),
+(5, 'DOCTOR');
